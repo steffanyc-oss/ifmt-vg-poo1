@@ -9,6 +9,10 @@ public class Livro extends ItemBiblioteca {
         super(titulo);
         // TODO: se autor for null ou em branco, lançar IllegalArgumentException.
         // TODO: guardar o autor.
+        if (autor == null || autor.isBlank()) {
+            throw new IllegalArgumentException("Autor obrigatório");
+        }
+        this.autor = autor.trim();
     }
 
     public String getAutor() {
@@ -19,6 +23,6 @@ public class Livro extends ItemBiblioteca {
     public String descricao() {
         // TODO: retornar "Livro: ", o título, " | Autor: " e o autor.
         // Exemplo: Livro: O Pequeno Príncipe | Autor: Antoine de Saint-Exupéry
-        return "";
+        return "Livro: " + getTitulo() + " | Autor: " + autor;
     }
 }
