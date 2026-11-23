@@ -35,6 +35,9 @@ public class Biblioteca {
         // TODO 9: se buscarPorTitulo(item.getTitulo()) não for null, lançar
         //         RegraException("Já existe um item com o título \"<título>\"").
         //         Dica: \" escreve aspas dentro de uma String.
+        if (buscarPorTitulo(item.getTitulo()) != null) {
+            throw new RegraException("Já existe um item com o título \"" + item.getTitulo() + "\"");
+        }
         acervo.add(item);
     }
 
@@ -54,6 +57,11 @@ public class Biblioteca {
     public ArrayList<ItemBiblioteca> itensDisponiveis() {
         ArrayList<ItemBiblioteca> livres = new ArrayList<>();
         // TODO 10: percorrer o acervo e colocar em "livres" só os itens disponíveis.
+        for (ItemBiblioteca item : acervo) {
+            if (item.isDisponivel()) {
+                livres.add(item);
+            }
+        }
         return livres;
     }
 
@@ -72,12 +80,20 @@ public class Biblioteca {
         // TODO 11: se a lista leitores já contém (contains) este leitor, lançar
         //          RegraException("Matrícula repetida: " + matrícula).
         //          O contains pergunta ao equals do Leitor (TODO 8).
+        if (leitores.contains(leitor)) {
+            throw new RegraException("Matrícula repetida: " + leitor.getMatricula());
+        }
         leitores.add(leitor);
     }
 
     public Leitor buscarLeitor(int matricula) {
         // TODO 12: percorrer leitores e devolver o que tem esta matrícula.
         //          Se nenhum tiver, retornar null.
+        for (Leitor leitor : leitores) {
+            if (leitor.getMatricula() == matricula) {
+                return leitor;
+            }
+        }
         return null;
     }
 

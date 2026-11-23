@@ -13,13 +13,21 @@ public class Livro extends ItemBiblioteca {
         // TODO 2: autor null ou em branco: IllegalArgumentException("Autor obrigatório").
         //         ano negativo: IllegalArgumentException("Ano inválido").
         //         Guardar autor.trim() e ano.
+        if (autor == null || autor.isBlank()) {
+            throw new IllegalArgumentException("Autor obrigatório");
+        }
+        if (ano < 0) {
+            throw new IllegalArgumentException("Ano inválido");
+        }
+        this.autor = autor.trim();
+        this.ano = ano;
     }
 
     public Livro(String titulo, String autor) {
         // TODO 3: apague a linha abaixo e chame o construtor completo com ano 0:
         //         this(titulo, autor, 0);
         //         Assim a validação fica num lugar só.
-        super(titulo);
+        this(titulo, autor, 0);
     }
 
     public String getAutor() {
@@ -35,6 +43,9 @@ public class Livro extends ItemBiblioteca {
         // TODO 4: se ano for 0, fica como está.
         //         Senão, acrescentar " (" + ano + ")" no fim.
         //         Exemplo: Livro: Dom Casmurro | Autor: Machado de Assis (1899)
-        return "Livro: " + getTitulo() + " | Autor: " + autor;
+        if (ano == 0) {
+            return "Livro: " + getTitulo() + " | Autor: " + autor;
+        }
+        return "Livro: " + getTitulo() + " | Autor: " + autor + " (" + ano + ")";
     }
 }
