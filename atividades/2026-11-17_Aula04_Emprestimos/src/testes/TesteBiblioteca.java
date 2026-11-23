@@ -74,6 +74,12 @@ public class TesteBiblioteca {
         Leitor bruno = b.cadastrarLeitor("Bruno");
         // TODO 12: escreva o teste: Bruno tenta devolver "Vidas Secas", que ele não pegou.
         //         Use try/catch como nos testes acima e verifique que a RegraException acontece.
+        try {
+            b.devolver(bruno, b.buscarPorTitulo("Vidas Secas"));
+            Verificador.verificar(false, "não pode devolver item que não pegou");
+        } catch (RegraException e) {
+            Verificador.verificar(true, "não pode devolver item que não pegou");
+        }
     }
 
     private static void testeDevolucaoLiberaItem() {
@@ -81,5 +87,9 @@ public class TesteBiblioteca {
         Leitor ana = b.cadastrarLeitor("Ana");
         // TODO 13: escreva o teste: Ana pega e devolve "Dom Casmurro". Verifique que o item
         //         voltou a ficar disponível e que não há mais empréstimos em aberto.
+        b.emprestar(ana, b.buscarPorTitulo("Dom Casmurro"), DIA);
+        b.devolver(ana, b.buscarPorTitulo("Dom Casmurro"));
+        Verificador.verificar(b.buscarPorTitulo("Dom Casmurro").isDisponivel(), "devolução libera o item");
+        Verificador.verificar(b.emprestimosAtivos().isEmpty(), "devolução encerra o empréstimo");
     }
 }

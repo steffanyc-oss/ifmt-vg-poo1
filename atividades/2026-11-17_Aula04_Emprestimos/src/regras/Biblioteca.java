@@ -111,7 +111,16 @@ public class Biblioteca {
         //         lançar RegraException: "<título>" já está emprestado
         // TODO 7: o leitor recebe o item (leitor.receber). Depois, criar o
         //         Emprestimo(leitor, item, data), guardar em "emprestimos" e devolvê-lo.
-        return null;
+        if (leitor.atingiuLimite()) {
+            throw new RegraException(leitor.getNome() + " já está com " + Leitor.LIMITE + " itens");
+        }
+        if (!item.emprestar()) {
+            throw new RegraException("\"" + item.getTitulo() + "\" já está emprestado");
+        }
+        leitor.receber(item);
+        Emprestimo emprestimo = new Emprestimo(leitor, item, data);
+        emprestimos.add(emprestimo);
+        return emprestimo;
     }
 
     public void devolver(Leitor leitor, ItemBiblioteca item) {
@@ -122,11 +131,27 @@ public class Biblioteca {
         //         RegraException: <nome> não está com "<título>"
         // TODO 9: o leitor entrega o item, o item é devolvido, e o empréstimo
         //         ativo deste item é encerrado (e.isAtivo() && e.getItem() == item).
+        if (!leitor.estaCom(item)) {
+            throw new RegraException(leitor.getNome() + " não está com \"" + item.getTitulo() + "\"");
+        }
+        leitor.entregar(item);
+        item.devolver();
+        for (Emprestimo e : emprestimos) {
+            if (e.isAtivo() && e.getItem() == item) {
+                e.encerrar();
+                break;
+            }
+        }
     }
 
     public ArrayList<Emprestimo> emprestimosAtivos() {
         ArrayList<Emprestimo> ativos = new ArrayList<>();
         // TODO 10: colocar em "ativos" só os empréstimos que estão ativos.
+        for (Emprestimo e : emprestimos) {
+            if (e.isAtivo()) {
+                ativos.add(e);
+            }
+        }
         return ativos;
     }
 

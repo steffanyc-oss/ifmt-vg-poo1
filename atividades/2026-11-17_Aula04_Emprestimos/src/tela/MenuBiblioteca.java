@@ -45,6 +45,17 @@ public class MenuBiblioteca {
                 // TODO 11: dentro de um try: se a opção for 2, biblioteca.emprestar(leitor, item)
                 //         e mostrar "Emprestado: " + o empréstimo; se for 3, biblioteca.devolver(leitor, item)
                 //         e mostrar "Devolvido.". No catch (RegraException e), mostrar "Erro: " + e.getMessage().
+                try {
+                    if (opcao == 2) {
+                        Emprestimo emprestimo = biblioteca.emprestar(leitor, item);
+                        System.out.println("Emprestado: " + emprestimo);
+                    } else {
+                        biblioteca.devolver(leitor, item);
+                        System.out.println("Devolvido.");
+                    }
+                } catch (RegraException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
             } else if (opcao == 4) {
                 for (Emprestimo e : biblioteca.emprestimosAtivos()) {
                     System.out.println("  " + e);

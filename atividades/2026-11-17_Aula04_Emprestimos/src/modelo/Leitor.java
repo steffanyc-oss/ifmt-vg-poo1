@@ -61,11 +61,13 @@ public class Leitor {
     /** Chamado pela Biblioteca depois de conferir as regras. */
     public void receber(ItemBiblioteca item) {
         // TODO 3: guardar o item na lista "itens".
+        itens.add(item);
     }
 
     /** Chamado pela Biblioteca na devolução. */
     public void entregar(ItemBiblioteca item) {
         // TODO 4: tirar o item da lista "itens".
+        itens.remove(item);
     }
 
     @Override

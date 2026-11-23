@@ -38,6 +38,7 @@ public class Emprestimo {
 
     public void encerrar() {
         // TODO 1: o empréstimo deixa de estar ativo (ativo passa a false).
+        ativo = false;
     }
 
     @Override
@@ -45,6 +46,9 @@ public class Emprestimo {
         // TODO 2: montar o texto: data | nome do leitor | título do item | situação
         //         Situação: "em aberto" se ativo, senão "devolvido".
         //         Exemplo: 2026-11-17 | Ana | Dom Casmurro | em aberto
-        return "";
+        if (ativo) {
+            return data + " | " + leitor.getNome() + " | " + item.getTitulo() + " | em aberto";
+        }
+        return data + " | " + leitor.getNome() + " | " + item.getTitulo() + " | devolvido";
     }
 }
